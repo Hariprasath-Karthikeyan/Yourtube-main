@@ -115,7 +115,6 @@ const VideoInfo = ({ video }: any) => {
       })
       .catch((error) => console.log("Error sharing", error));
   } else {
-    // Option 2: Fallback - copy to clipboard
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => alert("Link copied to clipboard!"))
@@ -123,7 +122,7 @@ const VideoInfo = ({ video }: any) => {
   }
 };
 const handleDownload = () => {
-  const videoUrl = `http://localhost:5000/${video.filepath}`; // or adjust path if needed
+  const videoUrl = `http://localhost:5000/${video.filepath}`; 
   const link = document.createElement('a');
   link.href = videoUrl;
   link.setAttribute('download', video.videotitle || 'video.mp4');
