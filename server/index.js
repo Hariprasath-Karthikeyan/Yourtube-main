@@ -14,6 +14,7 @@ dotenv.config();
 const app = express();
 import path from "path";
 app.use(cors({
+  origin: "https://your-vercel-project.vercel.app",
   origin: "http://localhost:3000",
   credentials: true
 }));

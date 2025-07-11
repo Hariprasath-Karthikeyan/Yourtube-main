@@ -1,12 +1,30 @@
 import express from "express";
-import { getallvideo, handlePoints, increasePoints, uploadvideo } from "../controllers/video.js";
-import upload from "../filehelper/filehelper.js";
+import multer from "multer";
+import {
+  getallvideo,
+  handlePoints,
+  increasePoints,
+  uploadvideo,
+} from "../controllers/video.js";
 
+const router = express.Router();
 
-const routes = express.Router();
+// Multer storage config (if not moved to separate filehelper.js)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname); // Unique filename
+  },
+});
 
-routes.post("/upload", upload.single("file"), uploadvideo);
-routes.get("/getall", getallvideo);
-routes.post("/increasePoints", increasePoints);
-routes.post("/points", handlePoints);
-export default routes;
+const upload = multer({ storage });
+
+// Routes
+router.post("/upload", upload.single("file"), uploadvideo);
+router.get("/getall", getallvideo);
+router.post("/increasePoints", increasePoints);
+router.post("/points", handlePoints);
+
+export default router;
